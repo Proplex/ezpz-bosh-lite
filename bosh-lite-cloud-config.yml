@@ -1,0 +1,198 @@
+azs:
+- name: z1
+- name: z2
+- name: z3
+compilation:
+  az: z1
+  network: loggregator
+  reuse_compilation_vms: true
+  vm_type: loggregator
+  workers: 5
+disk_types:
+- disk_size: 32768
+  name: bosh
+- disk_size: 1024
+  name: loggregator
+- disk_size: 1024
+  name: concourse
+- disk_size: 1024
+  name: consul
+- disk_size: 10240
+  name: mysql
+- disk_size: 1024
+  name: postgres
+- disk_size: 1024
+  name: blobstore
+- disk_size: 1024
+  name: small
+- disk_size: 1024
+  name: prometheus
+- disk_size: 1024
+  name: vault
+- disk_size: 1024
+  name: shield
+- disk_size: 2048
+  name: jumpbox
+- disk_size: 1024
+  name: default
+- disk_size: 1024
+  name: 1GB
+networks:
+- name: cf-edge
+  subnets:
+  - azs:
+    - z1
+    - z2
+    - z3
+    range: 10.244.0.0/24
+    reserved: 10.244.0.1
+    static:
+    - 10.244.0.2 - 10.244.0.11
+    - 10.244.0.34
+    - 10.244.0.35
+    - 10.244.0.36 - 10.244.0.44
+- name: cf-core
+  subnets:
+  - azs:
+    - z1
+    - z2
+    - z3
+    range: 10.244.1.0/24
+    reserved: 10.244.1.1
+    static:
+    - 10.244.1.2 - 10.244.1.10
+- name: cf-db
+  subnets:
+  - azs:
+    - z1
+    - z2
+    - z3
+    range: 10.244.2.0/24
+    reserved: 10.244.2.1
+    static:
+    - 10.244.2.2 - 10.244.2.10
+- name: cf-runtime
+  subnets:
+  - azs:
+    - z1
+    - z2
+    - z3
+    range: 10.244.3.0/24
+    reserved: 10.244.3.1
+    static:
+    - 10.244.3.2 - 10.244.3.10
+- name: cf-services
+  subnets:
+  - azs:
+    - z1
+    range: 10.244.4.0/24
+    reserved: 10.244.4.1
+    static:
+    - 10.244.4.2 - 10.244.4.10
+- name: concourse
+  subnets:
+  - azs:
+    - z1
+    - z2
+    - z3
+    range: 10.244.10.0/24
+    reserved: 10.244.10.1
+    static:
+    - 10.244.10.2 - 10.244.10.10
+- name: locker
+  subnets:
+  - range: 10.244.60.0/24
+    reserved: 10.244.60.1
+    static:
+    - 10.244.60.2 - 10.244.60.10
+- name: haproxy
+  subnets:
+  - cloud_properties:
+      name: random
+    range: 10.244.50.0/24
+    reserved:
+    - 10.244.50.1
+    - 10.244.50.2
+    static:
+    - 10.244.50.3 - 10.244.50.10
+- name: default
+  subnets:
+  - azs:
+    - z1
+    - z2
+    - z3
+    gateway: 10.244.20.1
+    range: 10.244.20.0/24
+    static:
+    - 10.244.20.2 - 10.244.20.30
+  type: manual
+- name: loggregator
+  subnets:
+  - azs:
+    - z1
+    - z2
+    - z3
+    gateway: 10.244.3.1
+    range: 10.244.3.0/24
+    static:
+    - 10.244.3.34
+  type: manual
+- name: vault
+  subnets:
+  - azs:
+    - z1
+    - z2
+    - z3
+    gateway: 10.244.8.1
+    range: 10.244.8.0/24
+    static:
+    - 10.244.8.2 - 10.244.8.10
+  type: manual
+- name: shield 
+  subnets:
+  - azs:
+    - z1
+    - z2
+    - z3
+    gateway: 10.244.9.1
+    range: 10.244.9.0/24
+    static:
+    - 10.244.9.2 - 10.244.9.10
+  type: manual
+- name: jumpbox
+  subnets:
+  - azs:
+    - z1
+    - z2
+    - z3
+    gateway: 10.244.10.1
+    range: 10.244.10.0/24
+    static:
+    - 10.244.10.2 - 10.244.10.10
+  type: manual
+- name: bosh
+  subnets:
+  - azs:
+    - z1
+    - z2
+    - z3
+    range: 10.244.100.0/24
+    reserved: 10.244.100.1
+    static:
+    - 10.244.100.2 - 10.244.100.11
+vm_extensions:
+- name: cf-elb
+- name: ssh-elb
+- name: tcp-elb
+- name: 10GB_ephemeral_disk
+- name: 50GB_ephemeral_disk
+- name: 100GB_ephemeral_disk
+vm_types:
+- name: haproxy
+- name: small
+- name: loggregator
+- name: medium
+- name: runtime
+- name: large
+- name: bosh
+- name: default
