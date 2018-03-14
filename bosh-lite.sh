@@ -1,7 +1,6 @@
 bosh-lite() {
     WORKSPACE="$HOME/boshspace"
     ENV_NAME="proto-lite"
-    OLD_DIR=$PWD
 
     case ${1} in
     (init)
@@ -60,6 +59,7 @@ bosh-lite() {
       export BOSH_CLIENT=admin
       export BOSH_CLIENT_SECRET=`bosh int $WORKSPACE/state/creds.yml --path /admin_password`
       bosh -e $ENV_NAME login
+      return 0
       ;;
 
     (*)
